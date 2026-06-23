@@ -3,48 +3,41 @@ import { View, Text, StyleSheet, Platform, useWindowDimensions } from 'react-nat
 import { useLanguage } from '../../lib/LanguageContext';
 import { supabase } from '../../lib/supabase';
 
-function TabIcon({ emoji, label, focused, isDesktop }: { emoji: string; label: string; focused: boolean; isDesktop: boolean }) {
-  return (
-    <View style={[isDesktop ? styles.iconWrapDesktop : styles.iconWrapMobile, focused && isDesktop && styles.iconFocused]}>
-      <Text style={isDesktop ? styles.emoji : styles.emojiMobile}>{emoji}</Text>
-      {isDesktop && (
-        <Text style={[styles.label, focused && styles.labelFocused]} numberOfLines={1}>{label}</Text>
-      )}
-      {!isDesktop && (
-        <Text style={[styles.labelMobile, focused && styles.labelMobileFocused]} numberOfLines={1}>{label}</Text>
-      )}
-    </View>
-  );
-}
-
 export default function TabsLayout() {
   const { t, lang } = useLanguage();
   const { width } = useWindowDimensions();
   const isDesktop = Platform.OS === 'web' && width >= 700;
 
-  const icon = (emoji: string, label: string) =>
-    ({ focused }: { focused: boolean }) =>
-      <TabIcon emoji={emoji} label={label} focused={focused} isDesktop={isDesktop} />;
+  const icon = (emoji: string) =>
+    ({ focused }: { focused: boolean }) => (
+      <View style={[styles.iconWrap, focused && isDesktop && styles.iconFocused]}>
+        <Text style={styles.emoji}>{emoji}</Text>
+      </View>
+    );
 
   return (
     <Tabs
       screenOptions={{
         headerShown: false,
-        tabBarStyle: isDesktop ? styles.tabBarDesktop : styles.tabBarMobile,
-        tabBarShowLabel: false,
+        tabBarShowLabel: true,
         tabBarPosition: isDesktop ? 'left' : 'bottom',
+        tabBarStyle: isDesktop ? styles.tabBarDesktop : styles.tabBarMobile,
+        tabBarLabelStyle: isDesktop ? styles.labelDesktop : styles.labelMobile,
+        tabBarActiveTintColor: isDesktop ? '#fff' : '#e91e8c',
+        tabBarInactiveTintColor: isDesktop ? 'rgba(255,255,255,0.5)' : '#999',
+        tabBarItemStyle: isDesktop ? styles.tabItemDesktop : styles.tabItemMobile,
       }}
     >
-      <Tabs.Screen name="index" options={{ tabBarIcon: icon('🔥', t('discover')) }} />
-      <Tabs.Screen name="matches" options={{ tabBarIcon: icon('💬', t('messages')) }} />
-      <Tabs.Screen name="events" options={{ tabBarIcon: icon('🎉', t('events')) }} />
-      <Tabs.Screen name="profile" options={{ tabBarIcon: icon('👤', t('profile')) }} />
-      <Tabs.Screen name="premium" options={{ tabBarIcon: icon('👑', 'Premium') }} />
-      <Tabs.Screen name="settings" options={{ tabBarIcon: icon('⚙️', t('settings')) }} />
+      <Tabs.Screen name="index" options={{ tabBarIcon: icon('🔥'), tabBarLabel: t('discover') }} />
+      <Tabs.Screen name="matches" options={{ tabBarIcon: icon('💬'), tabBarLabel: t('messages') }} />
+      <Tabs.Screen name="events" options={{ tabBarIcon: icon('🎉'), tabBarLabel: t('events') }} />
+      <Tabs.Screen name="profile" options={{ tabBarIcon: icon('👤'), tabBarLabel: t('profile') }} />
+      <Tabs.Screen name="premium" options={{ tabBarIcon: icon('👑'), tabBarLabel: 'Premium' }} />
+      <Tabs.Screen name="settings" options={{ tabBarIcon: icon('⚙️'), tabBarLabel: t('settings') }} />
       <Tabs.Screen
         name="logout"
         listeners={{ tabPress: (e) => { e.preventDefault(); supabase.auth.signOut(); } }}
-        options={{ tabBarIcon: icon('🚪', lang === 'sv' ? 'Logga ut' : 'Log out') }}
+        options={{ tabBarIcon: icon('🚪'), tabBarLabel: lang === 'sv' ? 'Logga ut' : 'Log out' }}
       />
     </Tabs>
   );
@@ -53,10 +46,10 @@ export default function TabsLayout() {
 const styles = StyleSheet.create({
   tabBarDesktop: {
     backgroundColor: '#1a1a2e',
+    width: 200,
+    paddingTop: 16,
+    paddingHorizontal: 8,
     borderRightWidth: 0,
-    width: 220,
-    paddingTop: 24,
-    paddingHorizontal: 12,
   },
   tabBarMobile: {
     backgroundColor: '#fff',
@@ -65,44 +58,33 @@ const styles = StyleSheet.create({
     height: 72,
     paddingBottom: 8,
   },
-  iconWrapDesktop: {
+  tabItemDesktop: {
     flexDirection: 'row',
-    alignItems: 'center',
-    gap: 12,
-    paddingHorizontal: 14,
-    paddingVertical: 12,
+    justifyContent: 'flex-start',
+    paddingHorizontal: 8,
+    height: 48,
     borderRadius: 12,
-    width: '100%',
-    overflow: 'hidden',
+    marginVertical: 2,
   },
-  iconWrapMobile: {
+  tabItemMobile: {
+    paddingTop: 4,
+  },
+  iconWrap: {
+    width: 28,
     alignItems: 'center',
     justifyContent: 'center',
-    paddingVertical: 4,
   },
   iconFocused: {
-    backgroundColor: 'rgba(233,30,140,0.15)',
+    // highlight handled by tabBarActiveTintColor
   },
   emoji: { fontSize: 20 },
-  emojiMobile: { fontSize: 22 },
-  label: {
-    flex: 1,
+  labelDesktop: {
     fontSize: 14,
-    color: 'rgba(255,255,255,0.6)',
-    fontWeight: '500',
-  },
-  labelFocused: {
-    color: '#fff',
-    fontWeight: '700',
+    fontWeight: '600',
+    marginLeft: 4,
   },
   labelMobile: {
     fontSize: 10,
-    color: '#999',
     marginTop: 2,
-    textAlign: 'center',
-  },
-  labelMobileFocused: {
-    color: '#e91e8c',
-    fontWeight: '700',
   },
 });

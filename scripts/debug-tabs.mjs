@@ -1,0 +1,13 @@
+import { chromium } from 'playwright';
+
+const browser = await chromium.launch({ headless: false });
+const page = await browser.newPage();
+await page.setViewportSize({ width: 1200, height: 800 });
+await page.goto('http://localhost:8082');
+await page.waitForTimeout(3000);
+await page.getByPlaceholder(/e-post|email/i).first().fill('testjenny@test.com');
+await page.getByPlaceholder(/lösenord|password/i).first().fill('jenny123');
+await page.getByText(/logga in|sign in/i).first().click();
+await page.waitForTimeout(5000);
+await page.screenshot({ path: 'scripts/sidebar-after.png' });
+await browser.close();
