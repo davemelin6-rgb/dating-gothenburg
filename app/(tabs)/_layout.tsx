@@ -1,12 +1,14 @@
 import { Tabs } from 'expo-router';
-import { View, Text, StyleSheet, Platform } from 'react-native';
+import { View, Text, StyleSheet, Platform, useWindowDimensions } from 'react-native';
 import { useLanguage } from '../../lib/LanguageContext';
 
 function TabIcon({ emoji, label, focused }: { emoji: string; label: string; focused: boolean }) {
+  const { width } = useWindowDimensions();
+  const isDesktop = Platform.OS === 'web' && width >= 768;
   return (
-    <View style={[styles.iconWrap, focused && styles.iconFocused]}>
-      <Text style={styles.emoji}>{emoji}</Text>
-      {Platform.OS === 'web' && (
+    <View style={[styles.iconWrap, focused && styles.iconFocused, !isDesktop && styles.iconWrapMobile]}>
+      <Text style={[styles.emoji, !isDesktop && styles.emojiMobile]}>{emoji}</Text>
+      {isDesktop && (
         <Text style={[styles.label, focused && styles.labelFocused]}>{label}</Text>
       )}
     </View>
@@ -15,13 +17,16 @@ function TabIcon({ emoji, label, focused }: { emoji: string; label: string; focu
 
 export default function TabsLayout() {
   const { t } = useLanguage();
+  const { width } = useWindowDimensions();
+  const isDesktop = Platform.OS === 'web' && width >= 768;
+
   return (
     <Tabs
       screenOptions={{
         headerShown: false,
-        tabBarStyle: Platform.OS === 'web' ? styles.tabBarWeb : styles.tabBarMobile,
+        tabBarStyle: isDesktop ? styles.tabBarWeb : styles.tabBarMobile,
         tabBarShowLabel: false,
-        tabBarPosition: Platform.OS === 'web' ? 'left' : 'bottom',
+        tabBarPosition: isDesktop ? 'left' : 'bottom',
       }}
     >
       <Tabs.Screen
@@ -67,7 +72,8 @@ export default function TabsLayout() {
 const styles = StyleSheet.create({
   tabBarMobile: {
     backgroundColor: '#fff',
-    borderTopWidth: 0,
+    borderTopWidth: 1,
+    borderTopColor: '#f0f0f0',
     elevation: 16,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: -4 },
@@ -91,6 +97,16 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     borderRadius: 12,
     width: '100%',
+  },
+  iconWrapMobile: {
+    flexDirection: 'column',
+    paddingHorizontal: 4,
+    paddingVertical: 6,
+    gap: 2,
+    width: 'auto',
+  },
+  emojiMobile: {
+    fontSize: 26,
   },
   iconFocused: {
     backgroundColor: 'rgba(233,30,140,0.15)',
