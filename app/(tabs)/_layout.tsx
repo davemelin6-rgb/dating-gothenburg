@@ -6,10 +6,20 @@ import { supabase } from '../../lib/supabase';
 function TabIcon({ emoji, label, focused }: { emoji: string; label: string; focused: boolean }) {
   const { width } = useWindowDimensions();
   const isDesktop = Platform.OS === 'web' && width >= 768;
+
+  if (isDesktop) {
+    return (
+      <View style={[styles.iconWrapDesktop, focused && styles.iconFocused]}>
+        <Text style={styles.emoji}>{emoji}</Text>
+        <Text style={[styles.labelDesktop, focused && styles.labelFocused]}>{label}</Text>
+      </View>
+    );
+  }
+
   return (
-    <View style={[styles.iconWrap, focused && styles.iconFocused, !isDesktop && styles.iconWrapMobile]}>
-      <Text style={[styles.emoji, !isDesktop && styles.emojiMobile]}>{emoji}</Text>
-      <Text style={[styles.label, focused && styles.labelFocused, !isDesktop && styles.labelMobile]} numberOfLines={1}>{label}</Text>
+    <View style={styles.iconWrapMobile}>
+      <Text style={styles.emojiMobile}>{emoji}</Text>
+      <Text style={[styles.labelMobile, focused && styles.labelMobileFocused]}>{label}</Text>
     </View>
   );
 }
@@ -95,7 +105,7 @@ const styles = StyleSheet.create({
     paddingTop: 24,
     paddingHorizontal: 12,
   },
-  iconWrap: {
+  iconWrapDesktop: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 12,
@@ -105,32 +115,33 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   iconWrapMobile: {
-    flexDirection: 'column',
-    paddingHorizontal: 4,
-    paddingVertical: 6,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 4,
     gap: 2,
-    width: 'auto',
-  },
-  emojiMobile: {
-    fontSize: 26,
+    minWidth: 48,
   },
   iconFocused: {
     backgroundColor: 'rgba(233,30,140,0.15)',
   },
-  emoji: {
-    fontSize: 22,
-  },
-  label: {
+  emoji: { fontSize: 22 },
+  emojiMobile: { fontSize: 22 },
+  labelDesktop: {
     fontSize: 15,
     color: 'rgba(255,255,255,0.55)',
     fontWeight: '500',
   },
-  labelMobile: {
-    fontSize: 10,
-    color: '#888',
-  },
   labelFocused: {
     color: '#fff',
+    fontWeight: '700',
+  },
+  labelMobile: {
+    fontSize: 10,
+    color: '#999',
+    marginTop: 2,
+  },
+  labelMobileFocused: {
+    color: '#e91e8c',
     fontWeight: '700',
   },
 });
