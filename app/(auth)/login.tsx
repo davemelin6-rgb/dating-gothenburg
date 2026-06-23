@@ -47,6 +47,12 @@ export default function LoginScreen() {
           </TouchableOpacity>
         </View>
 
+        <Link href="/(auth)/forgot-password" asChild>
+          <TouchableOpacity style={styles.forgotWrap}>
+            <Text style={styles.forgotText}>{t('forgotPassword')}</Text>
+          </TouchableOpacity>
+        </Link>
+
         <View style={styles.footer}>
           <Text style={styles.footerText}>{t('noAccount')} </Text>
           <Link href="/(auth)/signup" asChild>
@@ -68,7 +74,9 @@ const styles = StyleSheet.create({
   button: { backgroundColor: '#e91e8c', borderRadius: 14, paddingVertical: 18, alignItems: 'center', marginTop: 8 },
   buttonDisabled: { opacity: 0.6 },
   buttonText: { color: '#fff', fontSize: 17, fontWeight: '700' },
-  footer: { flexDirection: 'row', justifyContent: 'center', marginTop: 32 },
+  forgotWrap: { alignItems: 'center', marginTop: 8 },
+  forgotText: { color: 'rgba(255,255,255,0.45)', fontSize: 14 },
+  footer: { flexDirection: 'row', justifyContent: 'center', marginTop: 24 },
   footerText: { color: 'rgba(255,255,255,0.6)', fontSize: 15 },
   linkText: { color: '#e91e8c', fontSize: 15, fontWeight: '600' },
   errorBox: { backgroundColor: 'rgba(244,67,54,0.15)', borderRadius: 10, padding: 12, borderWidth: 1, borderColor: 'rgba(244,67,54,0.4)' },
