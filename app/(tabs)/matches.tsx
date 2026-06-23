@@ -161,7 +161,7 @@ export default function MatchesScreen() {
           renderItem={({ item }) => (
             <TouchableOpacity
               style={styles.matchItem}
-              onPress={() => router.push(`/chat/${item.id}`)}
+              onPress={() => router.push(`/match-profile/${item.id}`)}
               activeOpacity={0.75}
             >
               {item.avatar_url ? (
