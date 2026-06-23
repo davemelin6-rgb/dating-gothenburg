@@ -4,7 +4,7 @@ export const translations = {
   sv: {
     // App
     appName: 'Dating Göteborg',
-    tagline: 'Knulla ikväll',
+    tagline: 'Dejta ikväll',
 
     // Auth
     email: 'E-post',
@@ -99,7 +99,7 @@ export const translations = {
 
   en: {
     appName: 'Dating Gothenburg',
-    tagline: 'Knulla ikväll',
+    tagline: 'Dejta ikväll',
 
     email: 'Email',
     password: 'Password',
