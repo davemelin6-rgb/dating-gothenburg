@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <rect width="1200" height="630" fill="#1a1a2e"/>
+  <!-- Pink glow -->
+  <ellipse cx="600" cy="315" rx="400" ry="250" fill="#e91e8c" opacity="0.08"/>
+  <!-- Heart -->
+  <path d="M600 420 C600 420 380 300 380 175 C380 105 435 65 490 80 C530 92 555 120 600 155 C645 120 670 92 710 80 C765 65 820 105 820 175 C820 300 600 420 600 420Z" fill="#e91e8c"/>
+  <!-- App name -->
+  <text x="600" y="510" font-family="Arial, sans-serif" font-size="52" font-weight="900" fill="white" text-anchor="middle">Match GBG</text>
+  <!-- Tagline -->
+  <text x="600" y="565" font-family="Arial, sans-serif" font-size="26" fill="rgba(255,255,255,0.6)" text-anchor="middle">Bästa dejtingappen i Göteborg</text>
+</svg>
