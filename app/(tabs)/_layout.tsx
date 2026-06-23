@@ -1,6 +1,7 @@
 import { Tabs } from 'expo-router';
 import { View, Text, StyleSheet, Platform, useWindowDimensions } from 'react-native';
 import { useLanguage } from '../../lib/LanguageContext';
+import { supabase } from '../../lib/supabase';
 
 function TabIcon({ emoji, label, focused }: { emoji: string; label: string; focused: boolean }) {
   const { width } = useWindowDimensions();
@@ -16,7 +17,7 @@ function TabIcon({ emoji, label, focused }: { emoji: string; label: string; focu
 }
 
 export default function TabsLayout() {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const { width } = useWindowDimensions();
   const isDesktop = Platform.OS === 'web' && width >= 768;
 
@@ -63,6 +64,13 @@ export default function TabsLayout() {
         name="settings"
         options={{
           tabBarIcon: ({ focused }) => <TabIcon emoji="⚙️" label={t('settings')} focused={focused} />,
+        }}
+      />
+      <Tabs.Screen
+        name="logout"
+        listeners={{ tabPress: (e) => { e.preventDefault(); supabase.auth.signOut(); } }}
+        options={{
+          tabBarIcon: ({ focused }) => <TabIcon emoji="🚪" label={lang === 'sv' ? 'Logga ut' : 'Log out'} focused={focused} />,
         }}
       />
     </Tabs>
