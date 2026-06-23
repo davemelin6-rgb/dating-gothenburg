@@ -21,26 +21,7 @@
     },
     "web": {
       "bundler": "metro",
-      "favicon": "./public/favicon.svg",
-      "themeColor": "#e91e8c",
-      "name": "Match GBG",
-      "shortName": "Match GBG",
-      "description": "Match GBG är Göteborgs bästa dejtingapp. Hitta kärlek och dejter i Göteborg. The best dating app in Gothenburg, Sweden.",
-      "lang": "sv",
-      "backgroundColor": "#1a1a2e",
-      "meta": {
-        "keywords": "dejting göteborg, dating göteborg, bästa dejtingapp, dating gothenburg, dating sweden, match gbg, kärlek göteborg",
-        "og:title": "Match GBG – Bästa dejtingappen i Göteborg ❤️",
-        "og:description": "Hitta din match i Göteborg. Gratis att komma igång!",
-        "og:image": "https://matchgbg.se/og-image.svg",
-        "og:url": "https://matchgbg.se",
-        "og:type": "website",
-        "og:locale": "sv_SE",
-        "twitter:card": "summary_large_image",
-        "twitter:title": "Match GBG – Bästa dejtingappen i Göteborg ❤️",
-        "twitter:description": "Hitta din match i Göteborg. Gratis att komma igång!",
-        "twitter:image": "https://matchgbg.se/og-image.svg"
-      }
+      "favicon": "./assets/favicon.png"
     },
     "experiments": {
       "typedRoutes": true
