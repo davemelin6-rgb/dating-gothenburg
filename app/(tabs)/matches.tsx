@@ -161,21 +161,29 @@ export default function MatchesScreen() {
           renderItem={({ item }) => (
             <TouchableOpacity
               style={styles.matchItem}
-              onPress={() => router.push(`/match-profile/${item.id}`)}
+              onPress={() => router.push(`/chat/${item.id}`)}
               activeOpacity={0.75}
             >
-              {item.avatar_url ? (
-                <Image source={{ uri: item.avatar_url }} style={styles.avatar} />
-              ) : (
-                <View style={[styles.avatar, styles.avatarPlaceholder]}>
-                  <Text style={styles.avatarInitial}>{item.name[0]}</Text>
-                </View>
-              )}
+              {/* Tap avatar → view profile */}
+              <TouchableOpacity onPress={() => router.push(`/match-profile/${item.id}`)}>
+                {item.avatar_url ? (
+                  <Image source={{ uri: item.avatar_url }} style={styles.avatar} />
+                ) : (
+                  <View style={[styles.avatar, styles.avatarPlaceholder]}>
+                    <Text style={styles.avatarInitial}>{item.name[0]}</Text>
+                  </View>
+                )}
+              </TouchableOpacity>
               <View style={styles.matchInfo}>
                 <Text style={styles.matchName}>{item.name}, {item.age}</Text>
                 <Text style={styles.matchPreview} numberOfLines={1}>
                   {item.lastMessage ?? t('tapToSayHello')}
                 </Text>
+                <TouchableOpacity onPress={() => router.push(`/match-profile/${item.id}`)}>
+                  <Text style={styles.viewProfile}>
+                    {t('messages') === 'Meddelanden' ? 'Visa profil' : 'View profile'} →
+                  </Text>
+                </TouchableOpacity>
               </View>
               <Text style={styles.arrow}>›</Text>
             </TouchableOpacity>
@@ -207,7 +215,8 @@ const styles = StyleSheet.create({
   avatarInitial: { color: '#fff', fontSize: 24, fontWeight: '700' },
   matchInfo: { flex: 1, marginLeft: 14 },
   matchName: { fontSize: 17, fontWeight: '700', color: '#1a1a2e', marginBottom: 3 },
-  matchPreview: { fontSize: 14, color: '#888' },
+  matchPreview: { fontSize: 14, color: '#888', marginBottom: 2 },
+  viewProfile: { fontSize: 12, color: '#e91e8c', fontWeight: '600', marginTop: 2 },
   arrow: { fontSize: 22, color: '#ccc', marginLeft: 8 },
   likedSection: { margin: 16, backgroundColor: '#fff', borderRadius: 16, padding: 16, shadowColor: '#000', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.06, shadowRadius: 8, elevation: 3 },
   likedTitle: { fontSize: 15, fontWeight: '700', color: '#1a1a2e', marginBottom: 12 },
