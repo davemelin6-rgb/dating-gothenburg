@@ -1,5 +1,6 @@
 import { useState, useCallback, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Dimensions, ActivityIndicator, Modal } from 'react-native';
+import { useFocusEffect } from 'expo-router';
 import { SwipeCard } from '../../components/SwipeCard';
 import { supabase } from '../../lib/supabase';
 import { useLanguage } from '../../lib/LanguageContext';
@@ -16,26 +17,22 @@ export default function SwipeScreen() {
   const [matchedProfile, setMatchedProfile] = useState<Profile | null>(null);
 
   useEffect(() => {
-    // Wait for auth to be ready, then load
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-      if (session?.user && !currentUserId) {
-        setCurrentUserId(session.user.id);
-        loadProfilesForUser(session.user.id);
-      }
+      if (session?.user) setCurrentUserId(session.user.id);
     });
-
-    // Also try immediately in case session already exists
     supabase.auth.getSession().then(({ data: { session } }) => {
-      if (session?.user) {
-        setCurrentUserId(session.user.id);
-        loadProfilesForUser(session.user.id);
-      } else {
-        setLoading(false);
-      }
+      if (session?.user) setCurrentUserId(session.user.id);
+      else setLoading(false);
     });
-
     return () => subscription.unsubscribe();
   }, []);
+
+  // Reload profiles every time this tab is focused — picks up preference changes
+  useFocusEffect(
+    useCallback(() => {
+      if (currentUserId) loadProfilesForUser(currentUserId);
+    }, [currentUserId])
+  );
 
   async function loadProfilesForUser(userId: string) {
     setLoading(true);
