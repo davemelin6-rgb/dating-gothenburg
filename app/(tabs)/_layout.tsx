@@ -10,7 +10,7 @@ function TabIcon({ emoji, label, focused }: { emoji: string; label: string; focu
     <View style={[styles.iconWrap, focused && styles.iconFocused, !isDesktop && styles.iconWrapMobile]}>
       <Text style={[styles.emoji, !isDesktop && styles.emojiMobile]}>{emoji}</Text>
       {isDesktop && (
-        <Text style={[styles.label, focused && styles.labelFocused]}>{label}</Text>
+        <Text style={[styles.label, focused && styles.labelFocused]} numberOfLines={1}>{label}</Text>
       )}
     </View>
   );
