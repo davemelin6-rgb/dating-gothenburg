@@ -11,7 +11,7 @@ function TabIcon({ emoji, label, focused }: { emoji: string; label: string; focu
     return (
       <View style={[styles.iconWrapDesktop, focused && styles.iconFocused]}>
         <Text style={styles.emoji}>{emoji}</Text>
-        <Text style={[styles.labelDesktop, focused && styles.labelFocused]}>{label}</Text>
+        <Text style={[styles.labelDesktop, focused && styles.labelFocused]} numberOfLines={1} ellipsizeMode="tail">{label}</Text>
       </View>
     );
   }
@@ -127,6 +127,7 @@ const styles = StyleSheet.create({
   emoji: { fontSize: 22 },
   emojiMobile: { fontSize: 22 },
   labelDesktop: {
+    flex: 1,
     fontSize: 15,
     color: 'rgba(255,255,255,0.55)',
     fontWeight: '500',
