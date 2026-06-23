@@ -1,8 +1,10 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { useLanguage } from '../../lib/LanguageContext';
+import { supabase } from '../../lib/supabase';
 
 export default function SettingsScreen() {
   const { t, lang, setLang } = useLanguage();
+  const signOutLabel = lang === 'sv' ? 'Logga ut' : 'Log out';
 
   return (
     <View style={styles.container}>
@@ -43,6 +45,10 @@ export default function SettingsScreen() {
           <Text style={styles.infoText}>{t('version')}</Text>
         </View>
       </View>
+
+      <TouchableOpacity style={styles.logoutBtn} onPress={() => supabase.auth.signOut()}>
+        <Text style={styles.logoutText}>🚪 {signOutLabel}</Text>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -71,4 +77,10 @@ const styles = StyleSheet.create({
   checkmark: { fontSize: 16, color: '#e91e8c', fontWeight: '700' },
   infoRow: { paddingHorizontal: 16, paddingVertical: 14, borderTopWidth: 1, borderTopColor: '#f5f5f5' },
   infoText: { fontSize: 15, color: '#999' },
+  logoutBtn: {
+    margin: 16, backgroundColor: '#fff', borderRadius: 16,
+    paddingVertical: 16, alignItems: 'center',
+    borderWidth: 1.5, borderColor: '#ffccdd',
+  },
+  logoutText: { fontSize: 16, fontWeight: '700', color: '#e91e8c' },
 });
