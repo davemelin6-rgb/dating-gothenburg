@@ -232,7 +232,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     paddingTop: 16,
-    paddingBottom: 100,
+    paddingBottom: 16,
   },
   backgroundCard: {
     position: 'absolute',
@@ -248,13 +248,11 @@ const styles = StyleSheet.create({
   resetButton: { backgroundColor: '#e91e8c', borderRadius: 14, paddingHorizontal: 32, paddingVertical: 14 },
   resetButtonText: { color: '#fff', fontSize: 16, fontWeight: '700' },
   buttons: {
-    position: 'absolute',
-    bottom: 96,
-    left: 0,
-    right: 0,
     flexDirection: 'row',
     justifyContent: 'center',
     gap: 32,
+    paddingVertical: 20,
+    paddingBottom: 32,
   },
   actionBtn: {
     width: 64, height: 64, borderRadius: 32,
@@ -267,7 +265,7 @@ const styles = StyleSheet.create({
   nopeBtnText: { fontSize: 26, color: '#F44336' },
   likeBtnText: { fontSize: 26, color: '#fff' },
   lastAction: {
-    position: 'absolute', bottom: 168, alignSelf: 'center',
+    textAlign: 'center', marginTop: -12, marginBottom: 8,
     fontSize: 14, color: '#555', fontWeight: '600',
   },
   matchOverlay: {
